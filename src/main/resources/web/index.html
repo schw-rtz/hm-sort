@@ -12,35 +12,51 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script src="./sort.js"></script>
 </head>
 <body>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var options = $.extend({}, {
-				dataType : "script",
-				cache : true,
-				url : "./sort.js"
-			});
-			$.ajax(options);
+		$(document).ready(
+				function() {
+					$('#sortbutton').click(
+							function() {
+								var toBeSorted = $('#numbers').val();
 
-			$('#sortbutton').click(function() {
-				var toBeSorted = $('#numbers').val();
-				
-				var result = sortController.callSort(toBeSorted);
-				console.log(result);
+								var result = sortController
+										.callSort(toBeSorted);
 
-				var copyOfSortResult = $('#sortResult_0').clone(false);
+								var copyOfSortResult = $('#sortResult_0')
+										.clone(false);
 
-				copyOfSortResult = sortController.prepareDiv(copyOfSortResult, result)
-				
-				$('#listOfResults').after(copyOfSortResult);
-				
-				copyOfSortResult.slideDown();
+								copyOfSortResult = sortController.prepareDiv(
+										copyOfSortResult, result)
 
-			})
-		});
+								$('#listOfResults').after(copyOfSortResult);
+
+								copyOfSortResult.slideDown();
+
+							});
+				});
+
+		$(document).ready(
+				function() {
+					var oldSorts = sortController.loadPreviousSort();
+
+					$.each(oldSorts, function(index, item) {
+
+						var copyOfSortResult = $('#sortResult_0').clone(false);
+
+						copyOfSortResult = sortController.prepareDiv(
+								copyOfSortResult, item);
+
+						$('#listOfResults').after(copyOfSortResult);
+
+						copyOfSortResult.slideDown();
+
+					});
+
+				});
 	</script>
 
 	<div class="container">
@@ -51,7 +67,7 @@
 
 		<div class="jumbotron">
 
-			<p>Sortera tal... </p>
+			<p>Sortera tal...</p>
 
 			<div class="row">
 
@@ -64,7 +80,8 @@
 
 		<div class="jumbotron">
 
-			<p id="listOfResults">Resultaten av tidigare sorteringar syns nedan:</p>
+			<p id="listOfResults">Resultaten av tidigare sorteringar syns
+				nedan:</p>
 
 		</div>
 
